@@ -8,5 +8,7 @@ Before(async function () {
 });
 
 After(async function () {
-    await this.browser.close();
+    if (this.closeAfterTest) {
+        await this.browser.close();
+    }
 });

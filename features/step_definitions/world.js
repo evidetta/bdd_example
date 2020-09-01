@@ -4,16 +4,23 @@ const { Builder } = require('selenium-webdriver');
 const firefox = require('selenium-webdriver/firefox');
 
 class CustomWorld {
-    constructor() {
+    constructor(opts) {
+
         const options = new firefox.Options();
-        options.addArguments("-headless");
+
+        this.headless = opts.parameters.headless;
+        this.closeAfterTest = opts.parameters.closeAfterTest;
+
+        if (this.headless === true) {
+            options.addArguments("-headless");
+        }
 
         this.browser = new Builder()
             .forBrowser('firefox')
             .setFirefoxOptions(options)
             .build();
 
-        setDefaultTimeout(30 * 1000);
+        setDefaultTimeout(60 * 1000);
     }
 
     lookupID(string) {
