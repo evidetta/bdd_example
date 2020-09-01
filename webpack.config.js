@@ -3,14 +3,19 @@ const path = require('path');
 module.exports = {
   entry: [
     'jquery',
-    './src/app.js'
+    './src/app.ts'
   ],
+  mode: "production",
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist')
   },
+  resolve: {
+    extensions: ['.ts', '.tsx'],
+    modules: ['node_modules', path.resolve(__dirname, 'core')]
+  },
   optimization: {
-    minimize: false
+    minimize: true
   },
   module: {
     rules: [
@@ -41,6 +46,11 @@ module.exports = {
             loader: 'sass-loader'
           }
         ]
+      },
+      {
+        test: /\.tsx?$/,
+        use: 'ts-loader',
+        exclude: /node_modules/,
       }
     ]
   }
